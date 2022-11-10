@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             String tempStr = "", comment = "";
             for (String s: PERMISSIONS) {
                 line = s.split(".");
-                tempStr = line[-1];
+                int m = line.length - 1;
+                tempStr = line[m];
                 if (grantResults[x] == PackageManager.PERMISSION_GRANTED) {
                     comment = tempStr + " permission is granted";
                 } else {
