@@ -71,40 +71,15 @@ public class MainActivity extends AppCompatActivity {
             String[] line;
             String tempStr = "", comment = "";
             for (String s: PERMISSIONS) {
-                line = s.split(".");
-                int m = line.length - 1;
-                tempStr = line[m];
+                int m = s.length();
+                tempStr = s.substring(19, m);
                 if (grantResults[x] == PackageManager.PERMISSION_GRANTED) {
                     comment = tempStr + " permission is granted";
                 } else {
                     comment = tempStr + " permission is denied";
                 }
-                Toast.makeText(this, tempStr, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, comment, Toast.LENGTH_LONG).show();
                 x++;
-            }
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Internet permission is granted", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Internet permission is denied!!!", Toast.LENGTH_LONG).show();
-            }
-
-            if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "SMS permission is granted", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "SMS permission is denied!!!", Toast.LENGTH_LONG).show();
-            }
-
-            if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Read Phone state permission is granted", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Read Phone state permission is denied!!!", Toast.LENGTH_LONG).show();
-            }
-
-            if (grantResults[3] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Calling permission is granted", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Calling permission is denied!!!", Toast.LENGTH_LONG).show();
             }
 
 
