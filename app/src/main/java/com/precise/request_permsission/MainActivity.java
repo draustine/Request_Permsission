@@ -67,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 1) {
+            int x = 0;
+            String[] line;
+            String tempStr = "", comment = "";
+            for (String s: PERMISSIONS) {
+                line = s.split(".");
+                tempStr = line[-1];
+                if (grantResults[x] == PackageManager.PERMISSION_GRANTED) {
+                    comment = tempStr + " permission is granted";
+                } else {
+                    comment = tempStr + " permission is denied";
+                }
+                Toast.makeText(this, tempStr, Toast.LENGTH_LONG).show();
+                x++;
+            }
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Internet permission is granted", Toast.LENGTH_LONG).show();
