@@ -12,8 +12,8 @@
         android:id="@+id/getValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get Values"
-        android:textAllCaps="false" />
+        android:text="Get Carrier Sub"
+        android:textAllCaps="false"/>
 
     <RadioGroup
         android:id="@+id/sim_selector"
@@ -36,10 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="left"
-            android:checked="false"
+            android:checked="true"
             android:tag="1"
             android:text="Sim 2"
-            android:textSize="18dp" />
+            android:textSize="18dp"/>
 
 
     </RadioGroup>

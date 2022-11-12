@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         simSelector = findViewById(R.id.sim_selector);
         display = findViewById(R.id.display);
         initialiseSimSelector();
+        simChanged();
 
 
         simSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         GetValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getSubscriptionInfo();
+                extractPartCarrier();
             }
         });
 
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             display.setText("No sim is selected");
         }
+        setSmsManager();
     }
 
     // Get the carrier names for the sim slots
@@ -137,6 +140,40 @@ public class MainActivity extends AppCompatActivity {
             carrier = tManager.getNetworkOperatorName();
         }
 
+    }
+
+
+    private void extractPartCarrier(){
+        String p1="", p2 ="", pD = "";
+        if (carrier1 != "" && carrier1 != null){
+            if(carrier1.contains(" ")){
+                p1 = carrier1.split(" ")[0];
+            } else if(carrier1.contains("-")){
+                p1 = carrier1.split("-")[0];
+            }
+        }
+        if (carrier2 != "" && carrier2 != null){
+            if(carrier2.contains(" ")){
+                p2 = carrier2.split(" ")[0];
+            } else if(carrier2.contains("-")){
+                p2 = carrier2.split("-")[0];
+            }
+        }
+        if (carrier != "" && carrier != null){
+            if(carrier.contains(" ")){
+                pD = carrier.split(" ")[0];
+            } else if(carrier.contains("-")){
+                pD = carrier.split("-")[0];
+            }
+        }
+        String comment= "";
+        if(simCount > 1){
+            comment = "Sim 1 slot has " + p1 + " newtwork \\n Sim 2 slot has " + p2 + "network";
+        } else {
+            comment = "There is only one active sim slot and it contains " + pD + " network";
+        }
+        comment = "Show that you are there";
+        display.setText(comment);
     }
 
     //Set the sms manager for selected sim slot
@@ -195,4 +232,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }
