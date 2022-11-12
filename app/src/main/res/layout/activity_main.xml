@@ -27,6 +27,7 @@
             android:layout_height="30dp"
             android:layout_gravity="left"
             android:checked="false"
+            android:tag="0"
             android:text="Sim 1"
             android:textSize="18dp" />
 
@@ -36,6 +37,7 @@
             android:layout_height="30dp"
             android:layout_gravity="left"
             android:checked="false"
+            android:tag="1"
             android:text="Sim 2"
             android:textSize="18dp" />
 
@@ -43,7 +45,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginLeft="20dp"

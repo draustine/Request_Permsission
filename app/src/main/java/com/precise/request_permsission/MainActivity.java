@@ -1,5 +1,7 @@
 package com.precise.request_permsission;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -26,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] PERMISSIONS;
     private Button GetValues;
     private RadioGroup simSelector;
-    private RadioButton sim1, sim2;
+    private RadioButton sim1, sim2, selectedSim;
+    private TextView display;
     private SmsManager smsManager;
     private SubscriptionManager subsManager;
     private SubscriptionInfo subsInfo1, subsInfo2;
@@ -55,15 +59,55 @@ public class MainActivity extends AppCompatActivity {
         sim1 = findViewById(R.id.sim1);
         sim2 = findViewById(R.id.sim2);
         simSelector = findViewById(R.id.sim_selector);
+        display = findViewById(R.id.display);
         initialiseSimSelector();
+
+
+        simSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int simId = simSelector.getCheckedRadioButtonId();
+                if (simId != -1) {
+                    selectedSim = findViewById(simId);
+                    String comment = selectedSim.getText().toString();
+                    comment = "The selected sim is \"" + comment + "\" sim";
+                    display.setText(comment);
+                    activeSim = parseInt((String) selectedSim.getTag());
+
+                    String temp = String.valueOf(activeSim);
+                    comment = comment + " in sim \"" + temp + "\"";
+                    display.setText(comment);
+
+                } else {
+
+                    display.setText("No sim is selected");
+                }
+
+
+            }
+        });
 
 
 
         GetValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int simId = simSelector.getCheckedRadioButtonId();
+                if (simId != -1) {
+                    selectedSim = findViewById(simId);
+                    String comment = selectedSim.getText().toString();
+                    comment = "The selected sim is \"" + comment + "\" sim";
+                    display.setText(comment);
+                    activeSim = parseInt((String) selectedSim.getTag());
 
+                    String temp = String.valueOf(activeSim);
+                    comment = comment + " in sim \"" + temp + "\"";
+                    display.setText(comment);
 
+                } else {
+
+                    display.setText("No sim is selected");
+                }
             }
         });
 
@@ -87,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
             sim1.setText(carrier);
         }
     }
+
+
 
     // Get the carrier names for the sim slots
     private void getSubscriptionInfo(){
