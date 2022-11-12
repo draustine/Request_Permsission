@@ -147,32 +147,38 @@ public class MainActivity extends AppCompatActivity {
         String p1="", p2 ="", pD = "";
         if (carrier1 != "" && carrier1 != null){
             if(carrier1.contains(" ")){
-                p1 = carrier1.split(" ")[0];
+                p1 = carrier1.split(" ")[0].toUpperCase();
             } else if(carrier1.contains("-")){
-                p1 = carrier1.split("-")[0];
+                p1 = carrier1.split("-")[0].toUpperCase();
+            } else {
+                p1 = carrier1.toUpperCase();
             }
         }
         if (carrier2 != "" && carrier2 != null){
             if(carrier2.contains(" ")){
-                p2 = carrier2.split(" ")[0];
+                p2 = carrier2.split(" ")[0].toUpperCase();
             } else if(carrier2.contains("-")){
-                p2 = carrier2.split("-")[0];
+                p2 = carrier2.split("-")[0].toUpperCase();
+            } else {
+                p2 = carrier2.toUpperCase();
             }
         }
         if (carrier != "" && carrier != null){
             if(carrier.contains(" ")){
-                pD = carrier.split(" ")[0];
+                pD = carrier.split(" ")[0].toUpperCase();
             } else if(carrier.contains("-")){
-                pD = carrier.split("-")[0];
+                pD = carrier.split("-")[0].toUpperCase();
+            } else {
+                pD = carrier.toUpperCase();
             }
         }
         String comment= "";
         if(simCount > 1){
-            comment = "Sim 1 slot has " + p1 + " newtwork \\n Sim 2 slot has " + p2 + "network";
+            comment = "Sim 1 slot has " + p1 + " newtwork \\n Sim 2 slot has " + p2 + " network";
         } else {
             comment = "There is only one active sim slot and it contains " + pD + " network";
         }
-        comment = "Show that you are there";
+        //comment = "Show that you are there";
         display.setText(comment);
     }
 
