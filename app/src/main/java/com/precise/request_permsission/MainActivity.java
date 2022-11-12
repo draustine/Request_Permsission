@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         }
         String comment= "";
         if(simCount > 1){
-            comment = "Sim 1 slot has " + p1 + " newtwork \\n Sim 2 slot has " + p2 + " network";
+            comment = "Sim 1 slot has " + p1 + " network \nSim 2 slot has " + p2 + " network";
         } else {
             comment = "There is only one active sim slot and it contains " + pD + " network";
         }
