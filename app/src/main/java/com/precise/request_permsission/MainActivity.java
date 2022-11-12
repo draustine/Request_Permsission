@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
             comment = "The selected network is \"" + comment + "\"";
             display.setText(comment);
             activeSim = parseInt((String) selectedSim.getTag());
-
-            String temp = String.valueOf(activeSim);
+            int simNumber = activeSim + 1;
+            String temp = String.valueOf(simNumber);
             comment = comment + " in sim slot \"" + temp + "\"";
             display.setText(comment);
 
