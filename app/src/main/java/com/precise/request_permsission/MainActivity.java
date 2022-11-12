@@ -7,10 +7,12 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -28,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private SmsManager smsManager;
     private SubscriptionManager subsManager;
     private SubscriptionInfo subsInfo1, subsInfo2;
-    private static final int REQUEST_RPS = 0;
-    private String carrier1, carrier2;
+    private String carrier1, carrier2, carrier;
+    private int simCount, simId1, simId2, activeSim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,17 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.CALL_PHONE
         };
 
+        subsManager = this.getSystemService(SubscriptionManager.class);
+        simCount = subsManager.getActiveSubscriptionInfoCountMax();
+
         getPermissions();
         getSubscriptionInfo();
+        sim1 = findViewById(R.id.sim1);
+        sim2 = findViewById(R.id.sim2);
+        simSelector = findViewById(R.id.sim_selector);
+        initialiseSimSelector();
+
+
 
         GetValues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected void getPermissions(){
+    private void getPermissions(){
 
         if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
 
@@ -68,13 +79,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void initialiseSimSelector(){
+        if (simCount > 1) {
+            sim1.setText(carrier1);
+            sim2.setText(carrier2);
+        } else {
+            sim1.setText(carrier);
+        }
+    }
+
+    // Get the carrier names for the sim slots
     private void getSubscriptionInfo(){
 
-        subsManager = this.getSystemService(SubscriptionManager.class);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             getPermissions();
         }
-        int simCount = subsManager.getActiveSubscriptionInfoCountMax();
         if(simCount > 1) {
             List localList = subsManager.getActiveSubscriptionInfoList();
             subsInfo1 = (SubscriptionInfo) localList.get(0);
@@ -82,8 +101,22 @@ public class MainActivity extends AppCompatActivity {
             carrier1 = subsInfo1.getDisplayName().toString();
             carrier2 = subsInfo2.getDisplayName().toString();
         } else {
-            subsInfo1 = subsManager.
+            TelephonyManager tManager = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+            carrier = tManager.getNetworkOperatorName();
+        }
 
+    }
+
+    //Set the sms manager for selected sim slot
+    private void setSmsManager(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            getPermissions();
+        }
+        SubscriptionInfo subsInfo = subsManager.getActiveSubscriptionInfoForSimSlotIndex(activeSim);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            smsManager = getApplicationContext().getSystemService(SmsManager.class) .createForSubscriptionId(subsInfo.getSubscriptionId());
+        } else {
+            smsManager = SmsManager.getSmsManagerForSubscriptionId(activeSim);
         }
 
     }
