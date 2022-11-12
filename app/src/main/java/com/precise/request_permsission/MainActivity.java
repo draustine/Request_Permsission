@@ -66,24 +66,7 @@ public class MainActivity extends AppCompatActivity {
         simSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int simId = simSelector.getCheckedRadioButtonId();
-                if (simId != -1) {
-                    selectedSim = findViewById(simId);
-                    String comment = selectedSim.getText().toString();
-                    comment = "The selected sim is \"" + comment + "\" sim";
-                    display.setText(comment);
-                    activeSim = parseInt((String) selectedSim.getTag());
-
-                    String temp = String.valueOf(activeSim);
-                    comment = comment + " in sim \"" + temp + "\"";
-                    display.setText(comment);
-
-                } else {
-
-                    display.setText("No sim is selected");
-                }
-
-
+                simChanged();
             }
         });
 
@@ -92,22 +75,7 @@ public class MainActivity extends AppCompatActivity {
         GetValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int simId = simSelector.getCheckedRadioButtonId();
-                if (simId != -1) {
-                    selectedSim = findViewById(simId);
-                    String comment = selectedSim.getText().toString();
-                    comment = "The selected sim is \"" + comment + "\" sim";
-                    display.setText(comment);
-                    activeSim = parseInt((String) selectedSim.getTag());
 
-                    String temp = String.valueOf(activeSim);
-                    comment = comment + " in sim \"" + temp + "\"";
-                    display.setText(comment);
-
-                } else {
-
-                    display.setText("No sim is selected");
-                }
             }
         });
 
@@ -132,7 +100,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void simChanged(){
+        assert simSelector != null;
+        int simId = simSelector.getCheckedRadioButtonId();
+        if (simId != -1) {
+            selectedSim = findViewById(simId);
+            String comment = selectedSim.getText().toString();
+            comment = "The selected network is \"" + comment + "\"";
+            display.setText(comment);
+            activeSim = parseInt((String) selectedSim.getTag());
 
+            String temp = String.valueOf(activeSim);
+            comment = comment + " in sim slot \"" + temp + "\"";
+            display.setText(comment);
+
+        } else {
+
+            display.setText("No sim is selected");
+        }
+    }
 
     // Get the carrier names for the sim slots
     private void getSubscriptionInfo(){
