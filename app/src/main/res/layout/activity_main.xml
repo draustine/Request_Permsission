@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center"
     tools:context=".MainActivity">
 
@@ -11,16 +12,14 @@
         android:id="@+id/getValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Get Values"/>
+        android:text="Get Values"
+        android:textAllCaps="false" />
 
     <RadioGroup
         android:id="@+id/sim_selector"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/message"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_marginEnd="16dp">
 
         <RadioButton
             android:id="@+id/sim1"
@@ -42,5 +41,14 @@
 
 
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="TextView"
+        android:textSize="18dp"/>
 
 </LinearLayout>

@@ -8,11 +8,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private Button GetValues;
     private RadioGroup simSelector;
     private RadioButton sim1, sim2;
+    private SmsManager smsManager;
+    private SubscriptionManager subsManager;
+    private SubscriptionInfo subsInfo1, subsInfo2;
+    private static final int REQUEST_RPS = 0;
+    private String carrier1, carrier2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         getPermissions();
+        getSubscriptionInfo();
 
         GetValues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +67,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void getSubscriptionInfo(){
+
+        subsManager = this.getSystemService(SubscriptionManager.class);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            getPermissions();
+        }
+        int simCount = subsManager.getActiveSubscriptionInfoCountMax();
+        if(simCount > 1) {
+            List localList = subsManager.getActiveSubscriptionInfoList();
+            subsInfo1 = (SubscriptionInfo) localList.get(0);
+            subsInfo2 = (SubscriptionInfo) localList.get(1);
+            carrier1 = subsInfo1.getDisplayName().toString();
+            carrier2 = subsInfo2.getDisplayName().toString();
+        } else {
+            subsInfo1 = subsManager.
+
+        }
+
+    }
 
     private boolean hasPermissions(Context context, String... PERMISSIONS) {
 
