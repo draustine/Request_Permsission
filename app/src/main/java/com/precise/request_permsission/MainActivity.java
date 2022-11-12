@@ -64,12 +64,7 @@ public class MainActivity extends AppCompatActivity {
         simChanged();
 
 
-        simSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                simChanged();
-            }
-        });
+        simSelector.setOnCheckedChangeListener((group, checkedId) -> simChanged());
 
 
 
