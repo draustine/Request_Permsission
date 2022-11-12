@@ -10,19 +10,23 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private String[] PERMISSIONS;
-    private Button AskPermissions;
+    private Button GetValues;
+    private RadioGroup simSelector;
+    private RadioButton sim1, sim2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AskPermissions = findViewById(R.id.askPermissions);
+        GetValues = findViewById(R.id.getValues);
 
         PERMISSIONS = new String[] {
                 Manifest.permission.INTERNET,
@@ -31,18 +35,27 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.CALL_PHONE
         };
 
-        AskPermissions.setOnClickListener(new View.OnClickListener() {
+        getPermissions();
+
+        GetValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
 
-                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, 1);
-                }
             }
         });
 
     }
+
+    protected void getPermissions(){
+
+        if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
+
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, 1);
+        }
+
+    }
+
 
     private boolean hasPermissions(Context context, String... PERMISSIONS) {
 
